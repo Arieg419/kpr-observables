@@ -52,7 +52,7 @@ const INTERACTABLE_TYPES = {
 
 Defining an interactable as a contract will allow you to view and invoke it's methods through the KPR dashboard. This is similar to what you can do with Etherscan. Let's define an interactable contract together.
 
-![Contract Interactable]("https://github.com/Arieg419/kpr-observables/blob/master/img/InteractableContract.png)
+![Contract Interactable](https://github.com/Arieg419/kpr-observables/blob/master/img/InteractableContract.png)
 
 ```js
 import { initKPR, addConfigObject, deployConfig } from "@kpr-labs/observables";
@@ -90,7 +90,7 @@ await deployInteractables();
 
 Defining a histogram (bar chart) requires you to define the histogram `name`, as well as a payload describing how to fetch the data for each bucket in the histogram.
 
-![Histogram]("https://github.com/Arieg419/kpr-observables/blob/master/img/InteractableHistogram.png")
+![Histogram](https://github.com/Arieg419/kpr-observables/blob/master/img/InteractableHistogram.png)
 
 ```js
 import { initKPR, addHistogram, deployHistograms } from "@kpr-labs/observables";
