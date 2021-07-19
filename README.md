@@ -98,54 +98,175 @@ import { initKPR, addHistogram, deployHistograms } from "@kpr-labs/observables";
 // KPR Init
 initKPR({ API_URL, API_ENDPOINT: SPECTRAL_ENDPOINT, API_KEY: "<YOUR_KEY>" });
 
-addHistogram([
-  {
-    title: "USERS PER TICK",
-    buckets: [
+addHistogram({
+  title: "USERS PER TICK",
+  legend: [
+    "Available Liquidity",
+    "Total Debt",
+    "Liquidity Rate",
+    "Variable Liquidity Rate",
+  ],
+  buckets: [
     {
-        contractAddress,
-        abi,
-        method: "getReserveData",
-        title: "Tick 3",
-        returnKey: "1",
-        params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 3]
+      contractAddress: dataProviderContract.address,
+      abi: dataProviderJson.abi,
+      method: "getReserveData",
+      title: "Tick 3",
+      returnKey: "1",
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 3],
     },
     {
-        contractAddress,
-        abi,
-        method: "getReserveData",
-        title: "Tick 4",
-        returnKey: "2",
-        params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 4]
+      contractAddress: dataProviderContract.address,
+      abi: dataProviderJson.abi,
+      method: "getReserveData",
+      title: "Tick 4",
+      returnKey: "2",
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 4],
     },
     {
-        contractAddress,
-        abi,
-        method: "getReserveData",
-        title: "Tick 5",
-        returnKey: "3",
-        params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 5]
+      contractAddress: dataProviderContract.address,
+      abi: dataProviderJson.abi,
+      method: "getReserveData",
+      title: "Tick 5",
+      returnKey: "3",
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 5],
     },
     {
-        contractAddress,
-        abi,
-        method: "getReserveData",
-        title: "Tick 6",
-        returnKey: "4",
-        params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6]
+      contractAddress: dataProviderContract.address,
+      abi: dataProviderJson.abi,
+      method: "getReserveData",
+      title: "Tick 6",
+      returnKey: "4",
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6],
     },
     {
-        contractAddress,
-        abi,
-        method: "getReserveData",
-        title: "Tick 7",
-        returnKey: "5",
-        params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 7]
+      contractAddress: dataProviderContract.address,
+      abi: dataProviderJson.abi,
+      method: "getReserveData",
+      title: "Tick 7",
+      returnKey: "5",
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 7],
     },
-  }
-]);
+  ],
+});
 await deployHistograms();
 ```
+
+## STAT CARDS
+
+Stat cards let you display important or top line metrics with ease.
+
+![Stat Card Interactable](https://github.com/Arieg419/kpr-observables/blob/master/img/InteractableStatCard.png)
+
+```js
+addStatCard({
+  mainIcon: "trending_up",
+  mainIconBg: "bg-light-green",
+  mainTitle: "Active Users",
+  mainTextColor: "text-green",
+  secondaryIcon: "expand_less",
+  secondaryIconBg: "bg-green",
+  delta: null, // coming soon
+  dataFetchers: [
+    // vals should sum to 100
+    {
+      contractAddress: dataProviderContract.address,
+      abi: dataProviderJson.abi,
+      dataFetcherMethod: "fakeDataFetcher1",
+      returnKey: "4",
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6],
+    },
+    {
+      contractAddress: dataProviderContract.address,
+      abi: dataProviderJson.abi,
+      dataFetcherMethod: "fakeDataFetcher2",
+      returnKey: "4",
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6],
+    },
+    {
+      contractAddress: dataProviderContract.address,
+      abi: dataProviderJson.abi,
+      dataFetcherMethod: "fakeDataFetcher3",
+      returnKey: "4",
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6],
+    },
+  ],
+});
+```
+
+Note: We're using the Material Design color pallette and icon set for styling. You can specify mainIcon, background color, text color, secondary icons by selecting a valid option from the material UI Library.
+
+## PIE CHARTS
+
+Pie charts let you define a pie chart widget to be displayed on your dashboard.
+
+![Stat Card Interactable](https://github.com/Arieg419/kpr-observables/blob/master/img/InteractablePieChart.png)
+
+```js
+addPieChart({
+  primaryTitle: "Lending Protocols",
+  secondaryTitle: "Leading interest rates",
+  theme: "primary",
+  data: [
+    {
+      value: 65,
+      name: "Aave",
+      contractAddress: address,
+      abi,
+      dataFetcherMethod: "fakeDataFetcher1",
+      returnKey: null,
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6],
+    },
+    {
+      name: "Compound",
+      contractAddress: address,
+      abi,
+      dataFetcherMethod: "fakeDataFetcher2",
+      returnKey: null,
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6],
+    },
+    {
+      name: "Others",
+    },
+  ],
+});
+```
+
+## LINE CHARTS
+
+Line charts represent a time series. The same data fetcher is used for every data point in time.
+
+![Stat Card Interactable](https://github.com/Arieg419/kpr-observables/blob/master/img/InteractableLineChart.png)
+
+```js
+addLineChart({
+  primaryTitle: "New Users",
+  secondaryTitle: "Joined Last 7 Days",
+  delta: null, // coming soon
+  // deltaIcon: "arrow_drop_up",
+  theme: "primary",
+  dataFetchers: [
+    {
+      contractAddress: address,
+      abi,
+      dataFetcherMethod: "fakeDataFetcher1",
+      returnKey: null,
+      params: ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6],
+    },
+  ],
+  xAxis: [
+    "Block 1",
+    "Block 2",
+    "Block 3",
+    "Block 4",
+    "Block 5",
+    "Block 6",
+    "Block 7",
+  ],
+});
+```
+
+Note: We're using the Material Design color pallette and icon set for styling. You can specify mainIcon, background color, text color, secondary icons by selecting a valid option from the material UI Library.
 
 # Hardhat Network Config
 
