@@ -1,37 +1,57 @@
-# KPR Observables
+# KPR Dashboards and Data Visualizations
 
-KPR Observables allow you to interact with accounts and smart contracts during development, testing, and simulations. Getting started is easy! 🚀 🚀
+KPR allows you to create custom dashboards and visualization via our api. All supported charts are specified below, with examples. KPR data charts are generic and unopinionated. The graphs will display and fetch any data as long as you honor the API contract.
 
-## Overview
+## Quick Start with Demo Repo
 
-1. Add Observable Data as a Javascript object `{k: v}`
-2. Deploy Config Object to KPR Cloud
-3. View Observable Widgets on `https://kprlabs.io`
-4. Profit 🎉🎉🥳🥳
+1. The web app hosted on `https://kprlabs.io` connects to your local node. For the cloud hosted version of this please reach out to omer@kprlabs.io. I recommend spinning up a node using `hardhat`. However, any node that supports gRPC and listening on `localhost:8545` should work.
+2. In your terminal spin up a node with `npx hardhat node`. You can also spin up a local fork with Alchemy if you have a key. `npx --max-old-space-size=8192 hardhat node --fork https://eth-mainnet.alchemyapi.io/v2/<YOUR_KEY>`
+3. We'll want to deploy some contracts to our local chain. We'll later query our contracts and display the data. Let's clone our demo repo with `git clone https://github.com/Arieg419/chaos-labs-example-repo`.
+4. Navigate to your cloned repo. This should look something like `cd ~/dev/demo-repo`
+5. Compile and deploy the contracts in the example repo with `npx hardhat run scripts/deploy.js --network localhost`
+6. View Observable Widgets on `https://kprlabs.io`
+7. Profit 🎉🎉🥳🥳
 
-## Quick Start
+KPR deployments and chart definitions can be seen in `https://github.com/Arieg419/chaos-labs-example-repo/blob/master/scripts/deploy.js` and chart specific helper scripts (`histogram-deploy.js`, `stat-card-deploy.js...`)
 
-`npm install @kpr-labs/observables`
+## Add to your project
+
+Adding KPR to your project is easy. Let's get started.
+
+1. `npm install @kpr-labs/observables`
+2. Initialize the KPR module with `initKPR({ API_URL, API_ENDPOINT: SPECTRAL_ENDPOINT, API_KEY: "<YOUR_KEY>" })`
+3. Start defining your charts!
+
+Let's walk through examples with all of our charts.
 
 **Initialize KPR Config Object**
 
 ```js
-import { initKPR, addConfigObject, deployConfig } from "@kpr-labs/observables";
+const {
+  initKPR,
+  addObservables,
+  deployObservables,
+} = require("@kpr-labs/observables");
 
 const API_URL = "https://kpr-server.herokuapp.com";
 const SPECTRAL_ENDPOINT = "/cloud/server/spectral/config";
 
-// KPR Init
-const configData = {};
 initKPR({ API_URL, API_ENDPOINT: SPECTRAL_ENDPOINT, API_KEY: "<YOUR_KEY>" });
+```
 
+## Observables
+
+Observables are smart contract accounts or EOA (externally owned account) that you want to keep track of. Every address provided will result in a corresponding dashboard widget.
+
+```js
 // Add Observable Data
-configData["POOL_ADMIN"] = poolAdmin;
-configData["EMERGENCY_ADMIN"] = emergencyAdmin;
-addConfigObject(configData);
+const observableData = {};
+observableData["POOL_ADMIN"] = poolAdminAddress;
+observableData["EMERGENCY_ADMIN"] = emergencyAdminAddress;
+addObservables(observableData);
 
 // Deploy Observable Data
-await deployConfig();
+await deployObservables();
 ```
 
 # Interactables
